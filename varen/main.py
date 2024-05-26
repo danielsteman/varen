@@ -45,20 +45,28 @@ def download_file_from_temporary_download_url(download_url, filename):
     logger.info(f"Successfully downloaded dataset file to {filename}")
 
 
-class DayForecast(BaseModel):
+class DailyForecast(BaseModel):
     temperature: int
     precipitation: int
+    sun: int
 
 
-class Forecast(BaseModel):
-    pass
-
-
-def parse_weather_forecast_xml(xml: str):
+def parse_weather_forecast_xml(xml: str) -> list[DailyForecast]:
     root = ET.fromstring(xml)
     forecast = root.find("Middellange_x0020_en_x0020_lange_x0020_Termijn")
-    temp = forecast.find("maximumtemperatuur_min_dag1").text
-    return temp
+    forecast_objects = []
+    for i in range(1, 7):
+        try:
+            daily_forecast = DailyForecast(
+                temperature=int(forecast.find(f"maximumtemperatuur_max_dag{i}").text),
+                precipitation=int(forecast.find(f"neerslagkans_dag{i}").text),
+                sun=int(forecast.find(f"zonneschijnkans_dag{i}").text),
+            )
+            forecast_objects.append(daily_forecast)
+        except Exception as e:
+            logger.exception(f"Unable to parse data of day {i}: {e}")
+
+    return forecast_objects
 
 
 def main():
