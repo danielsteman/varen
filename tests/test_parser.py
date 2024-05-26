@@ -1,3 +1,9 @@
+import pytest
+
+from varen.main import parse_weather_forecast_xml
+
+
+@pytest.fixture
 def data():
     return """<?xml version="1.0" encoding="UTF-8"?>
     <dataroot xmlns:od="urn:schemas-microsoft-com:officedata" generated="2024-05-26T18:06:07">
@@ -164,3 +170,9 @@ def data():
     </Middellange_x0020_en_x0020_lange_x0020_Termijn>
     </dataroot>
     """
+
+
+def test_parser(data):
+    got = parse_weather_forecast_xml(data)
+    want = {}
+    assert want == got
