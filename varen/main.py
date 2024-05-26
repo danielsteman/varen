@@ -1,5 +1,3 @@
-URL = "https://api.dataplatform.knmi.nl/open-data/v1/datasets/outlook_weather_forecast/versions/1.0/files"
-
 import logging
 import os
 import sys
@@ -45,8 +43,12 @@ def download_file_from_temporary_download_url(download_url, filename):
     logger.info(f"Successfully downloaded dataset file to {filename}")
 
 
+def parse_weather_forecast_xml():
+    return
+
+
 def main():
-    api_key = os.environ["OPEN_DATA_API_KEY"]
+    api_key = os.environ["API_KEY"]
     dataset_name = "outlook_weather_forecast"
     dataset_version = "1.0"
     logger.info(f"Fetching latest file of {dataset_name} version {dataset_version}")
