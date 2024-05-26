@@ -1,8 +1,10 @@
 import logging
 import os
 import sys
+import xml.etree.ElementTree as ET
 
 import requests
+from pydantic import BaseModel
 
 logging.basicConfig()
 logger = logging.getLogger(__name__)
@@ -43,8 +45,15 @@ def download_file_from_temporary_download_url(download_url, filename):
     logger.info(f"Successfully downloaded dataset file to {filename}")
 
 
-def parse_weather_forecast_xml():
-    return
+class Forecast(BaseModel):
+    pass
+
+
+def parse_weather_forecast_xml(xml: str):
+    root = ET.fromstring(xml)
+    forecast = root.find("Middellange_x0020_en_x0020_lange_x0020_Termijn")
+    temp = forecast.find("maximumtemperatuur_min_dag1").text
+    return temp
 
 
 def main():

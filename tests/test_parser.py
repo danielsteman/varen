@@ -174,5 +174,5 @@ def data():
 
 def test_parser(data):
     got = parse_weather_forecast_xml(data)
-    want = {}
+    want = "17"
     assert want == got
