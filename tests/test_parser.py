@@ -173,5 +173,5 @@ def data():
 
 
 def test_parser(data):
-    got = parse_weather_forecast_xml(data)
-    assert len(got) == 6
+    list_of_objects = parse_weather_forecast_xml(data)
+    assert len(list_of_objects) == 6
