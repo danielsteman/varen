@@ -45,6 +45,11 @@ def download_file_from_temporary_download_url(download_url, filename):
     logger.info(f"Successfully downloaded dataset file to {filename}")
 
 
+class DayForecast(BaseModel):
+    temperature: int
+    precipitation: int
+
+
 class Forecast(BaseModel):
     pass
 
